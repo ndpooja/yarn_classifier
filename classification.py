@@ -21,11 +21,22 @@ df_R187 = pd.read_excel("Deliverable_table.xlsx", sheet_name="R187")
 
 # %%
 
+df_R1_norm = (df_R1 - df_R1.min()) / (df_R1.max() - df_R1.min())
+df_R91_sub_norm = (df_R91 - df_R91.min()) / (
+    df_R91.max() - df_R91.min()
+)
+df_R186_norm = (df_R186 - df_R186.min()) / (
+    df_R186.max() - df_R186.min()
+)
+df_R187_norm = (df_R187 - df_R187.min()) / (
+    df_R187.max() - df_R187.min()
+)
+
 # the second 7 rows are selected
-df_R1_sub = df_R1[8:15]
-df_R91_sub = df_R91[8:15]
-df_R186_sub = df_R186[8:15]
-df_R187_sub = df_R187[8:15]
+df_R1_sub = df_R1_norm[8:15]
+df_R91_sub = df_R91_sub_norm[8:15]
+df_R186_sub = df_R186_norm[8:15]
+df_R187_sub = df_R187_norm[8:15]
 
 # %%
 
@@ -40,25 +51,11 @@ list(df_R1_sub.columns)
 
 # %%
 
-# normalize the data
-df_R1_sub_norm = (df_R1_sub - df_R1_sub.min()) / (df_R1_sub.max() - df_R1_sub.min())
-df_R91_sub_norm = (df_R91_sub - df_R91_sub.min()) / (
-    df_R91_sub.max() - df_R91_sub.min()
-)
-df_R186_sub_norm = (df_R186_sub - df_R186_sub.min()) / (
-    df_R186_sub.max() - df_R186_sub.min()
-)
-df_R187_sub_norm = (df_R187_sub - df_R187_sub.min()) / (
-    df_R187_sub.max() - df_R187_sub.min()
-)
-
-# %%
-
 # Select the saxs data
-df_R1_sub_selected = df_R1_sub_norm[["SAXS1", "Unnamed: 3", "SAXS2", "Unnamed: 5"]]
-df_R91_sub_selected = df_R91_sub_norm[["SAXS1", "Unnamed: 3", "SAXS2", "Unnamed: 5"]]
-df_R186_sub_selected = df_R186_sub_norm[["SAXS1", "Unnamed: 3", "SAXS2", "Unnamed: 5"]]
-df_R187_sub_selected = df_R187_sub_norm[["SAXS1", "Unnamed: 3", "SAXS2", "Unnamed: 5"]]
+df_R1_sub_selected = df_R1_sub[["SAXS1", "Unnamed: 3", "SAXS2", "Unnamed: 5"]]
+df_R91_sub_selected = df_R91_sub[["SAXS1", "Unnamed: 3", "SAXS2", "Unnamed: 5"]]
+df_R186_sub_selected = df_R186_sub[["SAXS1", "Unnamed: 3", "SAXS2", "Unnamed: 5"]]
+df_R187_sub_selected = df_R187_sub[["SAXS1", "Unnamed: 3", "SAXS2", "Unnamed: 5"]]
 
 # Add a new column 'label' to each DataFrame
 df_R1_sub_selected.loc[:, "label"] = 0
@@ -86,7 +83,7 @@ x_saxs = df_x_saxs.drop("label", axis=1)
 # %%
 
 # Select the waxs data
-df_R1_sub_selected = df_R1_sub_norm[
+df_R1_sub_selected = df_R1_sub[
     [
         "WAXS M1",
         "Unnamed: 7",
@@ -110,7 +107,7 @@ df_R1_sub_selected = df_R1_sub_norm[
         "Unnamed: 25",
     ]
 ]
-df_R91_sub_selected = df_R91_sub_norm[
+df_R91_sub_selected = df_R91_sub[
     [
         "WAXS M1",
         "Unnamed: 7",
@@ -134,7 +131,7 @@ df_R91_sub_selected = df_R91_sub_norm[
         "Unnamed: 25",
     ]
 ]
-df_R186_sub_selected = df_R186_sub_norm[
+df_R186_sub_selected = df_R186_sub[
     [
         "WAXS M1",
         "Unnamed: 7",
@@ -158,7 +155,7 @@ df_R186_sub_selected = df_R186_sub_norm[
         "Unnamed: 25",
     ]
 ]
-df_R187_sub_selected = df_R187_sub_norm[
+df_R187_sub_selected = df_R187_sub[
     [
         "WAXS M1",
         "Unnamed: 7",
@@ -184,10 +181,10 @@ df_R187_sub_selected = df_R187_sub_norm[
 ]
 
 # Add a new column 'label' to each DataFrame
-df_R1_sub_selected["label"] = 0
-df_R91_sub_selected["label"] = 1
-df_R186_sub_selected["label"] = 2
-df_R187_sub_selected["label"] = 3
+df_R1_sub_selected.loc[:, "label"] = 0
+df_R91_sub_selected.loc[:, "label"] = 1
+df_R186_sub_selected.loc[:, "label"] = 2
+df_R187_sub_selected.loc[:, "label"] = 3
 
 # Concatenate the selected columns from each DataFrame
 df_x_waxs = pd.concat(
@@ -269,7 +266,7 @@ loo = LeaveOneOut()
 accuracies = []
 cms = []
 
-# Your labels
+# labels
 labels = [0, 1, 2, 3]
 
 # Perform the leave-one-out cross-validation
