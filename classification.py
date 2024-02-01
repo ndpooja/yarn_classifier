@@ -20,6 +20,14 @@ df_R187 = pd.read_excel("Deliverable_table.xlsx", sheet_name="R187")
 #     os.makedirs("saxs_waxs_figures")
 
 # %%
+# Drop the first two columns
+df_R1 = df_R1[1:22].drop(["Data point ", "Sample "], axis=1)
+df_R91 = df_R91[1:22].drop(["Data point ", "Sample "], axis=1)
+df_R186 = df_R186[1:22].drop(["Data point ", "Sample "], axis=1)
+df_R187 = df_R187[1:22].drop(["Data point ", "Sample "], axis=1)
+
+# %%
+
 
 df_R1_norm = (df_R1 - df_R1.min()) / (df_R1.max() - df_R1.min())
 df_R91_sub_norm = (df_R91 - df_R91.min()) / (
@@ -33,18 +41,11 @@ df_R187_norm = (df_R187 - df_R187.min()) / (
 )
 
 # the second 7 rows are selected
-df_R1_sub = df_R1_norm[8:15]
-df_R91_sub = df_R91_sub_norm[8:15]
-df_R186_sub = df_R186_norm[8:15]
-df_R187_sub = df_R187_norm[8:15]
+df_R1_sub = df_R1_norm[7:14]
+df_R91_sub = df_R91_sub_norm[7:14]
+df_R186_sub = df_R186_norm[7:14]
+df_R187_sub = df_R187_norm[7:14]
 
-# %%
-
-# Drop the first two columns
-df_R1_sub = df_R1_sub.drop(["Data point ", "Sample "], axis=1)
-df_R91_sub = df_R91_sub.drop(["Data point ", "Sample "], axis=1)
-df_R186_sub = df_R186_sub.drop(["Data point ", "Sample "], axis=1)
-df_R187_sub = df_R187_sub.drop(["Data point ", "Sample "], axis=1)
 
 # %%
 list(df_R1_sub.columns)
@@ -217,7 +218,7 @@ loo = LeaveOneOut()
 accuracies = []
 cms = []
 
-# Your labels
+# labels
 labels = [0, 1, 2, 3]
 
 # Perform the leave-one-out cross-validation
